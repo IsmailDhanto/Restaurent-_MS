@@ -4,5 +4,7 @@ from restuarent import views
 urlpatterns = [
     
     path("",views.index,name="Index"),
-    path("home/",views.home,name="home")
+    path("home/",views.home,name="home"),
+    path("product/",views.product, name="product"),
+    path("order/",views.order, name="order")
 ]
