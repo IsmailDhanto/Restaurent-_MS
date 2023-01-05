@@ -53,4 +53,6 @@ def get_products(request):
 
 
 
+def post_product(request):
+    post_prd = request.POST['']
 # Create your views here.
