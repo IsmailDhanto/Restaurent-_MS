@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 
 """
 this class standars for table of database 
@@ -8,15 +8,12 @@ and it holds for user authanication
 e.g:name, email, phone, gender, role, username and password
 
 """
-class Staff(models.Model):
-    name = models.CharField(max_length= 255)
-    email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=255)
-    gender = models.CharField(max_length=10)
-    role = models.CharField(max_length=255)
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
 
+
+class User(AbstractUser):
+    is_adnin = models.BooleanField("Is admin",default=False)
+    is_cashier = models.BooleanField("Is cashier",default=False)
+    is_waiter = models.BooleanField("Is waiter",default=False)
 
 
 """
@@ -29,7 +26,7 @@ e.g: product_name, product_cost, created_at
 
 class Product(models.Model):
     product_name = models.CharField(max_length=255)
-    product_cost = models.IntegerField()
+    product_cost = models.FloatField()
     created_at = models.DateTimeField(auto_now=True)
 
 
@@ -43,7 +40,6 @@ e.g: procut id, user_id, quantity,total  price
 
 class Order(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.PROTECT)
-    staff_id = models.ForeignKey(Staff, on_delete=models.PROTECT)
     quantity = models.PositiveSmallIntegerField()
 
 
@@ -68,17 +64,13 @@ class Transaction(models.Model):
     ]
 
 
-    order_id = models.ForeignKey(Order, on_delete=Product)
+    order_id = models.ForeignKey(Order, on_delete=models.PROTECT)
     total_price = models.IntegerField()
 
     payment_status = models.CharField(max_length=1, choices=PENDING_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING )
 
     date = models.DateTimeField(auto_now=True)
-    staff_id = models.ForeignKey(Staff, on_delete=models.PROTECT)
 
 
     
-
-
-
 
